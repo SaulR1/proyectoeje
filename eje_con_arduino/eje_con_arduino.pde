@@ -1,8 +1,8 @@
 import processing.sound.*;
 import processing.serial.*;
 
-PImage[] fondos = new PImage[6];
-SoundFile[] sonidosFondo = new SoundFile[6];
+PImage[] fondos = new PImage[5];
+SoundFile[] sonidosFondo = new SoundFile[5];
 int fondoActual = 0;
 int transicion = 0;
 Serial myPort; // Crear objeto serial para comunicarse con Arduino
@@ -15,7 +15,7 @@ void setup() {
   myPort = new Serial(this, portName, 9600);
 
   // Cargar imágenes de fondo y sonidos de fondo
-  for (int i = 0; i < 6; i++) {
+  for (int i = 0; i < 5; i++) {
     fondos[i] = loadImage("fondo" + (i + 1) + ".jpg");
     sonidosFondo[i] = new SoundFile(this, "sonido_fondo" + (i + 1) + ".mp3");
   }
@@ -31,6 +31,7 @@ void draw() {
   // Aplicar transición si hay una
   if (transicion > 0) {
     tint(255, transicion);
+    rect(0, 0, width, height);
     transicion -= 5;
   }
 
@@ -52,7 +53,7 @@ void cambiarFondo() {
   sonidosFondo[fondoActual].stop();
 
   // Cambiar al siguiente fondo
-  fondoActual = (fondoActual + 1) % 6;
+  fondoActual = (fondoActual + 1) % 5;
 
   // Reproducir el sonido correspondiente al nuevo fondo
   sonidosFondo[fondoActual].play();
